@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  title: Hall Management API
+  description: API for managing halls and related entities.
+  version: 1.0.0
+servers:
+  - url: /hall
+    description: Hall Service Base URL
+
+paths:
+  /:
+    post:
+      summary: Create a hall
+      operationId: createHall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHallRequest'
+      responses:
+        '200':
+          description: Hall successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hall'
+
+  /{id}:
+    get:
+      summary: Get a hall by ID
+      operationId: getHall
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Details of the specified hall
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hall'
+
+    put:
+      summary: Update a hall by ID
+      operationId: updateHall
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHallRequest'
+      responses:
+        '200':
+          description: Hall successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hall'
+
+    delete:
+      summary: Delete a hall by ID
+      operationId: deleteHall
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Hall successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hall'
+
+components:
+  schemas:
+    CreateHallRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the hall
+        features:
+          type: array
+          items:
+            type: string
+            enum:
+              - FEATURE_1
+              - FEATURE_2
+              - FEATURE_3
+          description: List of features available in the hall
+        seatRanges:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/SeatPosition'
+          description: Mapping of seat types to their positions
+
+    SeatPosition:
+      type: object
+      properties:
+        rowNo:
+          type: integer
+          description: Row number of the seat
+        columnNo:
+          type: integer
+          description: Column number of the seat
+
+    Hall:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the hall
+        name:
+          type: string
+          description: Name of the hall
+        features:
+          type: array
+          items:
+            type: string
+            enum:
+              - FEATURE_1
+              - FEATURE_2
+              - FEATURE_3
+          description: Features available in the hall
+        seats:
+          type: array
+          items:
+            type: object
+            properties:
+              rowNo:
+                type: integer
+              columnNo:
+                type: integer
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the hall was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the hall was last updated

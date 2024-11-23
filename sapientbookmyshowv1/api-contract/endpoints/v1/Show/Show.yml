@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: Movie Booking API
+  description: API for managing shows and related entities.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+paths:
+  /show/{id}:
+    get:
+      summary: Get a Show by ID
+      description: Fetch details of a specific show by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the show.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successfully fetched show details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Show'
+    put:
+      summary: Update a Show
+      description: Update details of an existing show by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the show to update.
+          schema:
+            type: integer
+      requestBody:
+        description: The show details to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateShowRequest'
+      responses:
+        200:
+          description: Successfully updated show.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Show'
+    delete:
+      summary: Delete a Show
+      description: Mark a show as deleted by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the show to delete.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successfully deleted show.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Show'
+  /show:
+    post:
+      summary: Create a Show
+      description: Create a new show.
+      requestBody:
+        description: Details of the show to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateShowRequest'
+      responses:
+        201:
+          description: Successfully created show.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Show'
+components:
+  schemas:
+    Show:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the show.
+        movie:
+          $ref: '#/components/schemas/Movie'
+        startTime:
+          type: string
+          format: date-time
+          description: Start time of the show.
+        duration:
+          type: integer
+          description: Duration of the show in minutes.
+        startDate:
+          type: string
+          format: date
+          description: The start date of the show.
+        hall:
+          $ref: '#/components/schemas/Hall'
+        showSeats:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShowSeat'
+        isDeleted:
+          type: boolean
+          description: Indicates if the show is marked as deleted.
+        isOnline:
+          type: boolean
+          description: Indicates if the show is available for online booking.
+
+    ShowSeat:
+      type: object
+      properties:
+        id:
+          type: integer
+        show:
+          $ref: '#/components/schemas/Show'
+        seat:
+          $ref: '#/components/schemas/Seat'
+        status:
+          type: string
+
+    CreateShowRequest:
+      type: object
+      properties:
+        hallId:
+          type: integer
+          description: The ID of the hall where the show will be held.
+        movieId:
+          type: integer
+          description: The ID of the movie for the show.
+        startTime:
+          type: string
+          format: date-time
+          description: Start time of the show.
+        duration:
+          type: integer
+          description: Duration of the show in minutes.
+        isOnline:
+          type: boolean
+          description: Indicates if the show is available for online booking.
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the movie.
+        name:
+          type: string
+          description: The name of the movie.
+        rating:
+          type: number
+          format: double
+          description: The movie's rating.
+        languages:
+          type: array
+          items:
+            type: string
+            description: Supported languages for the movie.
+        features:
+          type: array
+          items:
+            type: string
+            description: Features available in the movie (e.g., 3D, IMAX).
+        isDeleted:
+          type: boolean
+          description: Indicates if the movie is marked as deleted.
+    Hall:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the hall.
+        name:
+          type: string
+          description: The name of the hall.
+        features:
+          type: array
+          items:
+            type: string
+            description: Features available in the hall (e.g., Dolby, 4DX).
+        seats:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Seat'
+    Seat:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier for the seat.
+        rowNo:
+          type: integer
+          description: The row number of the seat.
+        columnNo:
+          type: integer
+          description: The column number of the seat.
+        seatType:
+          type: string
+          description: The type of the seat (e.g., Regular, VIP).
