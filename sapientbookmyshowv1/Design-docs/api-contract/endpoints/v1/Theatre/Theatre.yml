@@ -1,0 +1,209 @@
+openapi: 3.0.3
+info:
+  title: Theatre Management API
+  description: API for managing theatres and related entities.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/theatre
+    description: Local development server
+paths:
+  /:
+    post:
+      summary: Create a new theatre
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTheatreRequest'
+      responses:
+        '200':
+          description: Theatre created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theatre'
+
+  /{id}:
+    get:
+      summary: Get a theatre by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Theatre retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theatre'
+    delete:
+      summary: Delete a theatre by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Theatre deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theatre'
+    put:
+      summary: Update a theatre by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTheatreRequest'
+      responses:
+        '200':
+          description: Theatre updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Theatre'
+
+components:
+  schemas:
+    CreateTheatreRequest:
+      type: object
+      properties:
+        cityid:
+          type: integer
+        name:
+          type: string
+        address:
+          type: string
+        halls:
+          type: array
+          items:
+            type: integer
+        shows:
+          type: array
+          items:
+            type: integer
+    Theatre:
+      type: object
+      properties:
+        id:
+          type: integer
+        city:
+          $ref: '#/components/schemas/City'
+        name:
+          type: string
+        address:
+          type: string
+        halls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Hall'
+        shows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Show'
+        isDeleted:
+          type: boolean
+    City:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        theatres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Theatre'
+        isDeleted:
+          type: boolean
+    Hall:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        features:
+          type: array
+          items:
+            type: string
+        seats:
+          type: array
+          items:
+            $ref: '#/components/schemas/Seat'
+    Seat:
+      type: object
+      properties:
+        id:
+          type: integer
+        rowNo:
+          type: integer
+        columnNo:
+          type: integer
+        seatType:
+          type: string
+    Show:
+      type: object
+      properties:
+        id:
+          type: integer
+        movie:
+          $ref: '#/components/schemas/Movie'
+        startTime:
+          type: string
+          format: date-time
+        duration:
+          type: integer
+        startDate:
+          type: string
+          format: date
+        hall:
+          $ref: '#/components/schemas/Hall'
+        showSeats:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShowSeat'
+        isDeleted:
+          type: boolean
+        isOnline:
+          type: boolean
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        rating:
+          type: number
+        languages:
+          type: array
+          items:
+            type: string
+        features:
+          type: array
+          items:
+            type: string
+    ShowSeat:
+      type: object
+      properties:
+        id:
+          type: integer
+        seat:
+          $ref: '#/components/schemas/Seat'
+        status:
+          type: string

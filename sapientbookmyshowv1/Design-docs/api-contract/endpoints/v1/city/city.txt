@@ -1,0 +1,193 @@
+@RestController
+@RequestMapping("/city")
+@AllArgsConstructor
+public class CityController {
+
+    private CityService cityService;
+    private ModelMapper modelMapper;
+
+    @PostMapping
+    public City createCity(@RequestBody City request) {
+        return cityService.createCity(request);
+    }
+
+    @GetMapping("/{id}")
+    public City getCity(@PathVariable Long id) {
+        return cityService.getCity(id);
+    }
+
+    @GetMapping("/all")
+    public List<City> getallCity() {
+        return cityService.getallCity();
+    }
+
+    @GetMapping("/search/{city}")
+    public List<CreateCityResponse> searchCity(@PathVariable String city) {
+        return toCityResponseDTO(cityService.searchCity(city));
+    }
+
+    @DeleteMapping("/{id}")
+    public City deleteCity(@PathVariable Long id) {
+        return cityService.deleteCity(id);
+    }
+
+    @PutMapping("/{id}")
+    public City updateCity(@PathVariable Long id, @RequestBody City request) {
+        return cityService.updateCity(id,request);
+    }
+
+    private List<CreateCityResponse> toCityResponseDTO(List<City> city) {
+        return city.stream()
+                .map(cities -> modelMapper.map(cities, CreateCityResponse.class))
+                .toList();
+    }
+}
+
+@Getter
+@Setter
+@Entity
+public class City extends BaseModel {
+
+    private String name;
+
+    @OneToMany(mappedBy = "city")
+    private List<Theatre> theatres = new ArrayList<>();
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted = false;
+} @Data
+public class CreateCityResponse {
+    private String name;
+}
+@Getter
+@Setter
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Theatre extends BaseModel {
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    @JsonIgnore
+    private City city;
+
+    private String name;
+    private String address;
+
+    @OneToMany
+    private List<Hall> halls = new ArrayList<>();
+
+    @OneToMany
+    private List<Show> shows = new ArrayList<>();
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted = false;
+}
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(toBuilder = true)
+@Entity
+public class Hall extends BaseModel {
+
+    private String name;
+
+    @OneToMany(mappedBy = "hall")
+    private List<Seat> seats = new ArrayList<>();
+
+    @ElementCollection
+    @Enumerated
+    private List<MovieFeature> features = new ArrayList<>();
+
+}
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+public class Seat extends BaseModel {
+
+    private Integer rowNo;
+    private Integer columnNo;
+    @Enumerated
+    private SeatType seatType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hall_id")
+    @JsonIgnore
+    private Hall hall;
+
+}
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    @JsonIgnore
+    private Movie movie;
+    private Date startTime;
+    private Integer duration;
+    private LocalDate startDate;
+
+    @ManyToOne
+    private Hall hall;
+
+    @OneToMany(mappedBy = "show")
+    private List<ShowSeat> showSeats = new ArrayList<>();
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted = false;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isOnline = false;
+}
+@Getter
+@Setter
+@Entity
+@Table(name = "shows")
+@NoArgsConstructor
+@Builder(toBuilder = true)
+@AllArgsConstructor
+public class Show extends BaseModel {
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    @JsonIgnore
+    private Movie movie;
+    private Date startTime;
+    private Integer duration;
+    private LocalDate startDate;
+
+    @ManyToOne
+    private Hall hall;
+
+    @OneToMany(mappedBy = "show")
+    private List<ShowSeat> showSeats = new ArrayList<>();
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDeleted = false;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isOnline = false;
+}
+@Getter
+@Setter
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ShowSeat extends BaseModel {
+    @ManyToOne
+    @JoinColumn(name = "show_id")
+    @JsonIgnore
+    private Show show;
+
+    @ManyToOne
+    private Seat seat;
+
+    @Enumerated
+    private SeatStatus status;
+
+}
+
+create api contract doc in yaml 

@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: Movie Booking API
+  description: API for managing movies and related entities.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+paths:
+  /movie/{id}:
+    get:
+      summary: Get movie by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+
+  /movie/{id}/{date}:
+    get:
+      summary: Get movie by ID and date
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+
+  /movie:
+    post:
+      summary: Create a movie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieRequest'
+      responses:
+        '201':
+          description: Movie created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+
+  /movie/search/{movie}:
+    get:
+      summary: Search movies by name
+      parameters:
+        - name: movie
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of movies matching the search
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+
+  /movie/{id}:
+    put:
+      summary: Update a movie by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieRequest'
+      responses:
+        '200':
+          description: Movie updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+
+    delete:
+      summary: Delete a movie by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Movie deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        rating:
+          type: number
+          format: double
+        languages:
+          type: array
+          items:
+            type: string
+        features:
+          type: array
+          items:
+            type: string
+        isDeleted:
+          type: boolean
+        shows:
+          type: array
+          items:
+            $ref: '#/components/schemas/Show'
+
+    CreateMovieRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        rating:
+          type: number
+          format: double
+        languages:
+          type: array
+          items:
+            type: string
+        features:
+          type: array
+          items:
+            type: string
+
+    Show:
+      type: object
+      properties:
+        id:
+          type: integer
+        movie:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        duration:
+          type: integer
+        startDate:
+          type: string
+          format: date
+        hall:
+          $ref: '#/components/schemas/Hall'
+        showSeats:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShowSeat'
+        isOnline:
+          type: boolean
+
+    ShowSeat:
+      type: object
+      properties:
+        id:
+          type: integer
+        show:
+          $ref: '#/components/schemas/Show'
+        seat:
+          $ref: '#/components/schemas/Seat'
+        status:
+          type: string
+
+    Seat:
+      type: object
+      properties:
+        id:
+          type: integer
+        rowNo:
+          type: integer
+        columnNo:
+          type: integer
+        seatType:
+          type: string
+
+    Hall:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        seats:
+          type: array
+          items:
+            $ref: '#/components/schemas/Seat'
+        features:
+          type: array
+          items:
+            type: string
+
+    CreateMovieResponse:
+      type: object
+      properties:
+        name:
+          type: string
