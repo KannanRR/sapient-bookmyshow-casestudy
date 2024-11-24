@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+  description: API documentation for a user creation.
+paths:
+  /customer/{id}:
+    get:
+      summary: Get a customer
+      description: Retrieve customer details by their ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the customer.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Customer details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /customer:
+    post:
+      summary: Create a customer
+      description: Create a new customer.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerDTO'
+      responses:
+        '201':
+          description: Customer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+components:
+  schemas:
+    Customer:
+      allOf:
+        - type: object
+          properties:
+            fullName:
+              type: string
+            city:
+              type: string
+            phoneNumber:
+              type: string
+            email:
+              type: string
+    CreateCustomerDTO:
+      type: object
+      required:
+        - fullName
+        - city
+        - phoneNumber
+        - email
+        - username
+        - password
+      properties:
+        fullName:
+          type: string
+        city:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
