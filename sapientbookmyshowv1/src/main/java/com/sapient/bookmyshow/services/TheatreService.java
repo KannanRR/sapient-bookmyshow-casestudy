@@ -1,6 +1,7 @@
 package com.sapient.bookmyshow.services;
 import com.sapient.bookmyshow.dtos.CreateTheatreRequest;
 import com.sapient.bookmyshow.exceptions.CityNotFoundException;
+import com.sapient.bookmyshow.exceptions.ResourceNotFoundException;
 import com.sapient.bookmyshow.models.City;
 import com.sapient.bookmyshow.models.Hall;
 import com.sapient.bookmyshow.models.Show;
@@ -44,7 +45,7 @@ public class TheatreService {
 
     public Theatre deleteTheatre(Long id) {
         Theatre existingTheatre = theatreRepository.findTheatreByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         existingTheatre.setIsDeleted(true);
 
@@ -53,7 +54,7 @@ public class TheatreService {
 
     public Theatre updateTheatre(Long id, CreateTheatreRequest request) {
         Theatre existingTheatre = theatreRepository.findTheatreByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         List<Hall> halls = hallService.getHalls(request.getHalls());
         List<Show> shows = showService.getShows(request.getShows());

@@ -1,6 +1,7 @@
 package com.sapient.bookmyshow.services;
 
 import com.sapient.bookmyshow.exceptions.CityNotFoundException;
+import com.sapient.bookmyshow.exceptions.ResourceNotFoundException;
 import com.sapient.bookmyshow.models.City;
 import com.sapient.bookmyshow.repositories.CityRepository;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class CityService {
         //return cityRepository.findById(id)
                 //.orElseThrow(() -> new CityNotFoundException(id));
         return cityRepository.findCityByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
     }
 
     public List<City> getallCity() {
@@ -35,7 +36,7 @@ public class CityService {
 
     public City deleteCity(Long id) {
         City existingCity = cityRepository.findCityByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         existingCity.setIsDeleted(true);
 
@@ -44,7 +45,7 @@ public class CityService {
 
     public City updateCity(Long id, City request) {
         City existingCity = cityRepository.findCityByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         existingCity.setName(request.getName());
         return cityRepository.save(existingCity);

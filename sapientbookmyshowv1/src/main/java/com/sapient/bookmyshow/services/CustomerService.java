@@ -2,6 +2,7 @@ package com.sapient.bookmyshow.services;
 
 import com.sapient.bookmyshow.dtos.CreateCustomerDTO;
 import com.sapient.bookmyshow.exceptions.CustomerNotFoundException;
+import com.sapient.bookmyshow.exceptions.ResourceNotFoundException;
 import com.sapient.bookmyshow.models.Customer;
 import com.sapient.bookmyshow.models.User;
 import com.sapient.bookmyshow.repositories.CustomerRepository;
@@ -20,7 +21,7 @@ public class CustomerService {
     public Customer getCustomer(Long id) {
         return customerRepository
                 .findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
     }
 
     public Customer createCustomer(CreateCustomerDTO request) {
@@ -51,6 +52,3 @@ public class CustomerService {
         return customerRepository.findById(userId).orElse(null);
     }
 }
-
-// BREAK 6:02 - 6:10
-//        10:40

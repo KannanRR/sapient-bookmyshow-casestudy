@@ -2,6 +2,7 @@ package com.sapient.bookmyshow.services;
 
 import com.sapient.bookmyshow.dtos.CreateShowRequest;
 import com.sapient.bookmyshow.exceptions.CityNotFoundException;
+import com.sapient.bookmyshow.exceptions.ResourceNotFoundException;
 import com.sapient.bookmyshow.models.*;
 import com.sapient.bookmyshow.repositories.ShowSeatRepository;
 import com.sapient.bookmyshow.models.*;
@@ -73,7 +74,7 @@ public class ShowService {
                 .orElseThrow(() -> new CityNotFoundException(id));*/
 
         Show existingShow = showRepository.findShowByIdAndIsOnlineTrueOrIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         showSeatService.deleteByShowId(existingShow.getId());
 
@@ -122,7 +123,9 @@ public class ShowService {
 
     public Show getShow(Long id) {
         //return showRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Invalid show ID:" + id));
-        return showRepository.findShowByIdAndIsDeletedFalse(id).orElseThrow(() -> new NoSuchElementException("Invalid show ID:" + id));
+        return showRepository.findShowByIdAndIsDeletedFalse(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
+
     }
 
     public List<Show> getShows(List<Long> ids) {

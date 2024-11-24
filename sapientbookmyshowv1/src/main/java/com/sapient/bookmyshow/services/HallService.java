@@ -4,6 +4,7 @@ import com.sapient.bookmyshow.dtos.CreateTheatreRequest;
 import com.sapient.bookmyshow.dtos.SeatPosition;
 import com.sapient.bookmyshow.enums.SeatType;
 import com.sapient.bookmyshow.exceptions.CityNotFoundException;
+import com.sapient.bookmyshow.exceptions.ResourceNotFoundException;
 import com.sapient.bookmyshow.models.*;
 import com.sapient.bookmyshow.repositories.HallRepository;
 import lombok.AllArgsConstructor;
@@ -66,7 +67,7 @@ public class HallService {
 
     public Hall deleteHall(Long id) {
         Hall existingHall = hallRepository.findHallByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         existingHall.setIsDeleted(true);
 
@@ -75,7 +76,7 @@ public class HallService {
 
     public Hall updateHall(Long id, CreateHallRequest request) {
         Hall existingHall = hallRepository.findHallByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         seatService.deleteByHallId(existingHall.getId());
 

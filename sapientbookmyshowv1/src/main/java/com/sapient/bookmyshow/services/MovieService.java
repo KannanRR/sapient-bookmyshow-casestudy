@@ -1,6 +1,7 @@
 package com.sapient.bookmyshow.services;
 
 import com.sapient.bookmyshow.exceptions.CityNotFoundException;
+import com.sapient.bookmyshow.exceptions.ResourceNotFoundException;
 import com.sapient.bookmyshow.models.City;
 import com.sapient.bookmyshow.models.Movie;
 import com.sapient.bookmyshow.models.Show;
@@ -26,7 +27,7 @@ public class MovieService {
                 .orElseThrow(() -> new NoSuchElementException("Movie not found: " + movieId));*/
         return movieRepository
                 .findMovieByIdAndIsDeletedFalse(movieId)
-                .orElseThrow(() -> new NoSuchElementException("Movie not found: " + movieId));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + movieId + " not found"));
     }
 
     public Movie getMovieByDate(Long movieId, String startDate) {
@@ -57,7 +58,7 @@ public class MovieService {
 
     public Movie updateMovie(Long id, Movie request) {
         Movie existingMovie = movieRepository.findMovieByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         existingMovie.setName(request.getName());
         existingMovie.setRating(request.getRating());
@@ -66,7 +67,7 @@ public class MovieService {
 
     public Movie deleteMovie(Long id) {
         Movie existingMovie = movieRepository.findMovieByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         existingMovie.setIsDeleted(true);
 
