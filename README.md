@@ -48,6 +48,8 @@ HTTP Method : GET
 
 http://localhost:8080/api/v1/customer/{id}
 
+Eg : http://localhost:8080/api/v1/customer/1
+
 ## City API
 
 ### Create City
@@ -67,6 +69,7 @@ Sample JSON Body
 HTTP Method : GET
 
 http://localhost:8080/api/v1/city/{id}
+
 Eg : http://localhost:8080/api/v1/city/1
 
 ### Update City
@@ -89,6 +92,7 @@ Sample JSON Body
 HTTP Method : DELETE
 
 http://localhost:8080/api/v1/city/{id}
+
 Eg : http://localhost:8080/api/v1/city/1
 
 ### Get all City
@@ -102,6 +106,7 @@ http://localhost:8080/api/v1/city/all
 HTTP Method : GET
 
 http://localhost:8080/api/v1/city/search/{city}
+
 Eg : http://localhost:8080/api/v1/city/search/b
 
 ## Movie API
@@ -124,6 +129,7 @@ Sample JSON Body
 HTTP Method : GET
 
 http://localhost:8080/api/v1/movie/{id}
+
 Eg : http://localhost:8080/api/v1/movie/1
 
 ### Update Movie
@@ -131,6 +137,7 @@ Eg : http://localhost:8080/api/v1/movie/1
 HTTP Method : PUT
 
 http://localhost:8080/api/v1/movie/{id}
+
 Eg : http://localhost:8080/api/v1/movie/1
 
 {
@@ -143,6 +150,7 @@ Eg : http://localhost:8080/api/v1/movie/1
 HTTP Method : DELETE
 
 http://localhost:8080/api/v1/movie/{id}
+
 Eg : http://localhost:8080/api/v1/movie/1
 
 ## Hall API
@@ -191,6 +199,7 @@ Sample JSON Body
 HTTP Method : GET
 
 http://localhost:8080/api/v1/hall/{id}
+
 Eg : http://localhost:8080/api/v1/hall/1
 
 ### Update Hall
@@ -236,6 +245,7 @@ Sample JSON Body
 HTTP Method : DELETE
 
 http://localhost:8080/api/v1/hall/{id}
+
 Eg : http://localhost:8080/api/v1/hall/1
 
 ## Show API
@@ -260,6 +270,7 @@ Sample JSON Body
 HTTP Method : PUT
 
 http://localhost:8080/api/v1/show/{1}
+
 Eg : http://localhost:8080/api/v1/show/1
 
 Sample JSON Body
@@ -276,6 +287,7 @@ Sample JSON Body
 HTTP Method : GET
 
 http://localhost:8080/api/v1/show/{id}
+
 Eg : http://localhost:8080/api/v1/show/1
 
 ### Delete Show
@@ -283,6 +295,7 @@ Eg : http://localhost:8080/api/v1/show/1
 HTTP Method : DELETE
 
 http://localhost:8080/api/v1/show/{id}
+
 Eg : http://localhost:8080/api/v1/show/1
 
 ## Theatre API
@@ -308,6 +321,7 @@ Sample JSON Body
 HTTP Method : PUT
 
 http://localhost:8080/api/v1/theatre/{id}
+
 Eg : http://localhost:8080/api/v1/theatre/1
 
 Sample JSON Body
@@ -325,6 +339,7 @@ Sample JSON Body
 HTTP Method : GET
 
 http://localhost:8080/api/v1/theatre/{id}
+
 Eg : http://localhost:8080/api/v1/theatre/1
 
 ### Delete Theatre
@@ -332,6 +347,7 @@ Eg : http://localhost:8080/api/v1/theatre/1
 HTTP Method : DELETE
 
 http://localhost:8080/api/v1/theatre/{id}
+
 Eg : http://localhost:8080/api/v1/theatre/1
 
 ## Booking API
