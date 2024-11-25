@@ -1,17 +1,7 @@
 package com.sapient.bookmyshow.controllers;
 
 import com.sapient.bookmyshow.dtos.ErrorResponse;
-import com.sapient.bookmyshow.exceptions.CustomNotFoundException;
 import com.sapient.bookmyshow.exceptions.ResourceNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

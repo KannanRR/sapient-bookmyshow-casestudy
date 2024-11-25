@@ -8,18 +8,18 @@ Bookmyshow kind of Movie Booking Platform Case Study Low Level Design Implementa
    - Motive of this project POC is to explore on spring boot features.
    - Use of spring data JPA (Hibernate) with MYSQL.
    - Create a standarized project folder structure like Controller/DTO/Models/Services/Repository.
-   - Create REST API's End points for CREATE/UPDATE/GET methods.
+   - Create REST API's End points for CREATE/UPDATE/GET/DELETE methods.
    - Use various design patterns like Builder/Strategy 
 
 ## API Implementations
 
-   1. Create/Get Customer REST API End point.
-   2. Create/Get City REST API End point.
-   3. Create/Get Movie REST API End point.
-   4. Create/Get Hall REST API End point.
-   5. Create/Get Show REST API End point.
-   6. Create/Get Theatre REST API End point.
-   7. Create/Get Booking REST API End point.
+   1. CREATE/GET Customer REST API End point.
+   2. CREATE/GET/UPDATE/DELETE City REST API End point.
+   3. CREATE/GET/UPDATE/DELETE Movie REST API End point.
+   4. CREATE/GET/UPDATE/DELETE Hall REST API End point.
+   5. CREATE/GET/UPDATE/DELETE Show REST API End point.
+   6. CREATE/GET/UPDATE/DELETE Theatre REST API End point.
+   7. CREATE Booking REST API End point.
 
 ## API's Endpoints and Request JSON Formats
 
@@ -59,15 +59,50 @@ http://localhost:8080/api/v1/city
 Sample JSON Body
 
 {
-    "name": "Madurai"
+    "name": "Bangalore"
 }
-
 
 ### Get City
 
 HTTP Method : GET
 
 http://localhost:8080/api/v1/city/{id}
+Eg : http://localhost:8080/api/v1/city/1
+
+### Update City
+
+HTTP Method : PUT
+
+http://localhost:8080/api/v1/city/{id}
+
+Eg : http://localhost:8080/api/v1/city/1
+
+
+Sample JSON Body
+
+{
+"name": "Bengaluru"
+}
+
+### Delete City
+
+HTTP Method : DELETE
+
+http://localhost:8080/api/v1/city/{id}
+Eg : http://localhost:8080/api/v1/city/1
+
+### Get all City
+
+HTTP Method : GET
+
+http://localhost:8080/api/v1/city/all
+
+### Search City
+
+HTTP Method : GET
+
+http://localhost:8080/api/v1/city/search/{city}
+Eg : http://localhost:8080/api/v1/city/search/b
 
 ## Movie API
 
@@ -89,6 +124,26 @@ Sample JSON Body
 HTTP Method : GET
 
 http://localhost:8080/api/v1/movie/{id}
+Eg : http://localhost:8080/api/v1/movie/1
+
+### Update Movie
+
+HTTP Method : PUT
+
+http://localhost:8080/api/v1/movie/{id}
+Eg : http://localhost:8080/api/v1/movie/1
+
+{
+"name": "Beast",
+"rating": "2.3"
+}
+
+### Delete Movie
+
+HTTP Method : DELETE
+
+http://localhost:8080/api/v1/movie/{id}
+Eg : http://localhost:8080/api/v1/movie/1
 
 ## Hall API
 
@@ -136,6 +191,52 @@ Sample JSON Body
 HTTP Method : GET
 
 http://localhost:8080/api/v1/hall/{id}
+Eg : http://localhost:8080/api/v1/hall/1
+
+### Update Hall
+
+HTTP Method : PUT
+
+http://localhost:8080/api/v1/hall/1
+
+Sample JSON Body
+
+{
+  "name": "Hall-NEW-V2",
+  "features": [
+     "DOLBY_DIGITAL",
+     "TWO_D"
+  ],
+  "seatRanges": {
+  "PLATINUM": [
+    {
+      "rowNo": 0,
+      "columnNo": 1
+    },
+    {
+      "rowNo": 0,
+      "columnNo": 2
+    }
+  ],
+  "SILVER": [
+    {
+      "rowNo": 1,
+      "columnNo": 1
+    },
+    {
+      "rowNo": 1,
+      "columnNo": 2
+    }
+  ]
+ }
+}
+
+### Delete hALL
+
+HTTP Method : DELETE
+
+http://localhost:8080/api/v1/hall/{id}
+Eg : http://localhost:8080/api/v1/hall/1
 
 ## Show API
 
@@ -148,18 +249,41 @@ http://localhost:8080/api/v1/show
 Sample JSON Body
 
 {
-    "hallId": 41,
+    "hallId": 1,
     "movieId": 1,
     "startTime": "2024-01-20T08:14:00",
     "duration": 1
 }
 
+### Update Show
+
+HTTP Method : PUT
+
+http://localhost:8080/api/v1/show/{1}
+Eg : http://localhost:8080/api/v1/show/1
+
+Sample JSON Body
+
+{
+"hallId": 1,
+"movieId": 1,
+"startTime": "2024-01-20T08:14:00",
+"duration": 2
+}
 
 ### Get Show
 
 HTTP Method : GET
 
 http://localhost:8080/api/v1/show/{id}
+Eg : http://localhost:8080/api/v1/show/1
+
+### Delete Show
+
+HTTP Method : DELETE
+
+http://localhost:8080/api/v1/show/{id}
+Eg : http://localhost:8080/api/v1/show/1
 
 ## Theatre API
 
@@ -175,16 +299,40 @@ Sample JSON Body
     "cityid": 1,
     "name": "Theatre-A",
     "address": "Theatre-A Address",
-    "halls": [35,36],
-    "shows": [10,11]
+    "halls": [2],
+    "shows": [2]
 }
 
+### Update Theatre
+
+HTTP Method : PUT
+
+http://localhost:8080/api/v1/theatre/{id}
+Eg : http://localhost:8080/api/v1/theatre/1
+
+Sample JSON Body
+
+{
+"cityid": 1,
+"name": "Theatre-A",
+"address": "Theatre-A Address",
+"halls": [3],
+"shows": [3]
+}
 
 ### Get Theatre
 
 HTTP Method : GET
 
 http://localhost:8080/api/v1/theatre/{id}
+Eg : http://localhost:8080/api/v1/theatre/1
+
+### Delete Theatre
+
+HTTP Method : DELETE
+
+http://localhost:8080/api/v1/theatre/{id}
+Eg : http://localhost:8080/api/v1/theatre/1
 
 ## Booking API
 
@@ -206,9 +354,12 @@ Sample JSON Body
 
 1. Import this Bookmyshow project Folder in to Intellij.
 
-2. Create MYSQL Database "bookmyshow".
+2. Create MYSQL Database "sapientbookmyshowv1".
+   CREATE DATABASE sapientbookmyshowv1;
 
-3. Create MYSQL user "bms_api_users" with password "testpass" which is specified in application.properties file.
+3. Create MYSQL user "bms_api_user_v1" with password "testpass" which is specified in application.properties file.
+   CREATE USER 'bms_api_users_v1'@'localhost' IDENTIFIED BY 'testpass';
+   GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'bms_api_user_v1'@'localhost' WITH GRANT OPTION;
 
 4. Start the Spring boot Application.
 
