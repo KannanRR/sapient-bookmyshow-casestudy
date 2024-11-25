@@ -9,7 +9,22 @@ Bookmyshow kind of Movie Booking Platform Case Study Low Level Design Implementa
    - Use of spring data JPA (Hibernate) with MYSQL.
    - Create a standarized project folder structure like Controller/DTO/Models/Services/Repository.
    - Create REST API's End points for CREATE/UPDATE/GET/DELETE methods.
-   - Use various design patterns like Builder/Strategy 
+   - Use various design patterns like Builder/Strategy
+   - 
+## How to Run this Project Locally
+
+1. Import this Bookmyshow project Folder in to Intellij.
+
+2. Create MYSQL Database "sapientbookmyshowv1".
+   CREATE DATABASE sapientbookmyshowv1;
+
+3. Create MYSQL user "bms_api_user_v1" with password "testpass" which is specified in application.properties file.
+   CREATE USER 'bms_api_users_v1'@'localhost' IDENTIFIED BY 'testpass';
+   GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'bms_api_user_v1'@'localhost' WITH GRANT OPTION;
+
+4. Start the Spring boot Application.
+
+5. Use Postman app for executing the REST API's and testing.
 
 ## API Implementations
 
@@ -365,19 +380,4 @@ Sample JSON Body
     "showId": 21,
     "showSeatsId": [35,36]
 }
-
-## How to Run this Project Locally
-
-1. Import this Bookmyshow project Folder in to Intellij.
-
-2. Create MYSQL Database "sapientbookmyshowv1".
-   CREATE DATABASE sapientbookmyshowv1;
-
-3. Create MYSQL user "bms_api_user_v1" with password "testpass" which is specified in application.properties file.
-   CREATE USER 'bms_api_users_v1'@'localhost' IDENTIFIED BY 'testpass';
-   GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'bms_api_user_v1'@'localhost' WITH GRANT OPTION;
-
-4. Start the Spring boot Application.
-
-5. Use Postman app for executing the REST API's and testing.
 
