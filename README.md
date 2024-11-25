@@ -1,16 +1,16 @@
-## sapient-bookmyshow-casestudy
+## Sapient Bookmyshow Casestudy
 Bookmyshow kind of Movie Booking Platform Case Study Low Level Design Implementation using Spring Boot Framework and MYSQL Database.
 
 ## POC on Low Level Design for Bookmyshow Projects Implementation
 
-# Motive of this Project
+## Motive of this Project
 
    - Motive of this project POC is to explore on spring boot features.
    - Use of spring data JPA (Hibernate) with MYSQL.
    - Create a standarized project folder structure like Controller/DTO/Models/Services/Repository.
    - Create REST API's End points for CREATE/UPDATE/GET/DELETE methods.
    - Use various design patterns like Builder/Strategy
-   - 
+
 ## How to Run this Project Locally
 
 1. Import this Bookmyshow project Folder in to Intellij.
