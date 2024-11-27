@@ -69,7 +69,7 @@ public class ShowService {
 
     public Show updateShow(Long id, CreateShowRequest request) {
         Show existingShow = showRepository.findShowByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         /*Show existingShow = showRepository.findShowByIdAndIsOnlineTrueOrIsDeletedFalse(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));*/
@@ -132,7 +132,7 @@ public class ShowService {
 
     public Show deleteShow(Long id) {
         Show existingShow = showRepository.findShowByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new CityNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " not found"));
 
         existingShow.setIsDeleted(true);
 
