@@ -1,5 +1,6 @@
 package com.theatre.booking;
 
+import com.theatre.booking.exceptions.ResourceNotFoundException;
 import com.theatre.booking.models.Movie;
 import com.theatre.booking.models.Show;
 import com.theatre.booking.repositories.MovieRepository;
@@ -31,26 +32,26 @@ public class MovieServiceTest {
 
     @Test
     public void testGetMovie_Success() {
-        Long movieId = 1L;
-        Movie mockMovie = Movie.builder().name("Inception").rating(9.0).build();
+        Long movieId = 2L;
+        Movie mockMovie = Movie.builder().name("Inception").rating(9.0).isDeleted(false).build();
 
-        Mockito.when(movieRepository.findById(movieId)).thenReturn(Optional.of(mockMovie));
+        Mockito.when(movieRepository.findMovieByIdAndIsDeletedFalse(movieId)).thenReturn(Optional.of(mockMovie));
 
         Movie result = movieService.getMovie(movieId);
 
         assertEquals(mockMovie, result);
-        Mockito.verify(movieRepository, Mockito.times(1)).findById(movieId);
+        Mockito.verify(movieRepository, Mockito.times(1)).findMovieByIdAndIsDeletedFalse(movieId);
     }
 
     @Test
     public void testGetMovie_NotFound() {
         Long movieId = 2L;
 
-        Mockito.when(movieRepository.findById(movieId)).thenReturn(Optional.empty());
+        Mockito.when(movieRepository.findMovieByIdAndIsDeletedFalse(movieId)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(NoSuchElementException.class, () -> movieService.getMovie(movieId));
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> movieService.getMovie(movieId));
 
-        assertEquals("Movie not found: 2", exception.getMessage());
+        assertEquals("Resource with ID 2 not found", exception.getMessage());
     }
 
     @Test
