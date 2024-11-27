@@ -1,8 +1,0 @@
-package com.sapient.bookmyshow.exceptions;
-
-public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String message) {
-        super(message);
-    }
-}
-
