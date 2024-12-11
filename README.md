@@ -30,7 +30,7 @@ Bookmyshow kind of Movie Booking Platform Case Study Low Level Design Implementa
 
    1. CREATE/GET Customer REST API End point.
    2. CREATE/GET/UPDATE/DELETE City REST API End point.
-   3. CREATE/GET/UPDATE/DELETE Movie REST API End point.
+   3. CREATE/GET/UPDATE/DELETE/SEARCH Movie REST API End point.
    4. CREATE/GET/UPDATE/DELETE Hall REST API End point.
    5. CREATE/GET/UPDATE/DELETE Show REST API End point.
    6. CREATE/GET/UPDATE/DELETE Theatre REST API End point.
@@ -167,6 +167,14 @@ HTTP Method : DELETE
 http://localhost:8080/api/v1/movie/{id}
 
 Eg : http://localhost:8080/api/v1/movie/1
+
+### Search Movie
+
+HTTP Method : GET
+
+http://localhost:8080/api/v1/movie/{moviename}
+
+Eg : http://localhost:8080/api/v1/movie/be
 
 ## Hall API
 
